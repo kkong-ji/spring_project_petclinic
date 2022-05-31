@@ -21,6 +21,7 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -43,20 +44,8 @@ class OwnerController {
 
 	private static final String VIEWS_OWNER_CREATE_OR_UPDATE_FORM = "owners/createOrUpdateOwnerForm";
 
-	private final OwnerRepository owners;
-	private final ApplicationContext applicationContext;
-
-	public OwnerController(OwnerRepository clinicService, ApplicationContext applicationContext) {
-		this.owners = clinicService;
-		this.applicationContext = applicationContext;
-	}
-
-	@GetMapping("/bean")
-	@ResponseBody
-	public String bean() {
-		return "bean: " + applicationContext.getBean(OwnerRepository.class) + "\n"
-			+ "owners: " + this.owners;
-	}
+	@Autowired
+	private OwnerRepository owners;
 
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
